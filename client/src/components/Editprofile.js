@@ -12,26 +12,22 @@ function Editprofile() {
   let phoneNoInputRef = useRef();
   let profilePicInputRef = useRef();
 
-  let [profilePic,setProfilePic] = useState("./images/no-pic.jpg")
+  let [profilePic, setProfilePic] = useState("./images/no-pic.jpg");
 
-
-  let loginDetails = useSelector((store)=>{
+  let loginDetails = useSelector((store) => {
     return store.loginDetails;
+  });
 
-  })
-
-  useEffect(()=>{
+  useEffect(() => {
     firstNameInputRef.current.value = loginDetails.firstName;
     lastNameInputRef.current.value = loginDetails.lastName;
     ageInputRef.current.value = loginDetails.age;
     emailInputRef.current.value = loginDetails.email;
     phoneNoInputRef.current.value = loginDetails.phoneNo;
-    setProfilePic(`http://localhost:12345/${loginDetails.profilePic}`);
-    
-    
-  },[])
+    setProfilePic(`/${loginDetails.profilePic}`);
+  }, []);
 
-  let onUpdateProfileDetails = async() => {
+  let onUpdateProfileDetails = async () => {
     let dataToSend = new FormData();
     dataToSend.append("firstName", firstNameInputRef.current.value);
     dataToSend.append("lastName", lastNameInputRef.current.value);
@@ -40,32 +36,26 @@ function Editprofile() {
     dataToSend.append("password", passwordInputRef.current.value);
     dataToSend.append("phoneNo", phoneNoInputRef.current.value);
 
-    for(let i=0;i<profilePicInputRef.current.files.length;i++){
+    for (let i = 0; i < profilePicInputRef.current.files.length; i++) {
       dataToSend.append("profilePic", profilePicInputRef.current.files[i]);
     }
-   
 
     let reqOptions = {
       method: "PATCH",
       body: dataToSend,
     };
 
-    let JSONData = await fetch("http://localhost:12345/updateProfile",reqOptions);
+    let JSONData = await fetch("/updateProfile", reqOptions);
     let JSOData = await JSONData.json();
     console.log(JSOData);
     alert(JSOData.msg);
-
-    
-
-
   };
   return (
     <div className="App">
-      <Topnavigation/>
+      <Topnavigation />
       <form className="App">
         <h2>Update Profile</h2>
         <div>
-        
           <label>First Name</label>
           <input ref={firstNameInputRef}></input>
         </div>
@@ -87,31 +77,32 @@ function Editprofile() {
         </div>
         <div>
           <label>Phone NO</label>
-          <input ref={phoneNoInputRef} ></input>
+          <input ref={phoneNoInputRef}></input>
         </div>
         <div>
           <label>Profile Pic</label>
-          <input type="file" ref={profilePicInputRef}
-
-          onChange={(ele)=>{
-            let setURLProfilePic = URL.createObjectURL(ele.target.files[0]);
-            setProfilePic(setURLProfilePic);
-
-          }}
-            
-
+          <input
+            type="file"
+            ref={profilePicInputRef}
+            onChange={(ele) => {
+              let setURLProfilePic = URL.createObjectURL(ele.target.files[0]);
+              setProfilePic(setURLProfilePic);
+            }}
           ></input>
         </div>
         <img src={profilePic} className="profilePic"></img>
         <div>
-          <button type="button"  onClick={()=>{
-            onUpdateProfileDetails();
-          }}>Update profile</button>
+          <button
+            type="button"
+            onClick={() => {
+              onUpdateProfileDetails();
+            }}
+          >
+            Update profile
+          </button>
           <br></br>
-          
         </div>
       </form>
-      
     </div>
   );
 }
