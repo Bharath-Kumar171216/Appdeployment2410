@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+form{
+  display: inline-block;
+  background-color: yellow;
+  border: 2px solid black;
+  margin: 20px;
+}
+form label{
+  display: inline-block;
+  width: 150px;
+  font-size: 1.5rem;
+}
+form div{
+  margin: 20px;
+}
+.profilePic{
+  width: 200px;
+}
+nav{
+  background-color: lightgreen;
+  color: rebeccapurple;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 2rem;
+}
