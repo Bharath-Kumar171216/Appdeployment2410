@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 app.use(cors());
-app.use('/uploads', express.static('uploads'))
+app.use('/uploads', express.static('uploads'));
+app.use(express.static(path.join(__dirname,"./client/build")));
 
 
 
@@ -49,6 +50,10 @@ let userSchema = new mongoose.Schema({
 })
 
 let User = new mongoose.model("user",userSchema,"user");
+
+app.get("*",(req,res)=>{
+    res.sendFile("./client/build/index.html");
+})
 
 
 
