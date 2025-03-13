@@ -5,6 +5,7 @@ const multer = require("multer");
 const app = express();
 const jwt = require("jsonwebtoken");    
 const bcrypt = require("bcrypt");
+const path = require("path");
 
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
